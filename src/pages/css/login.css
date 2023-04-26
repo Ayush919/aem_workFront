@@ -1,0 +1,9 @@
+.textFieldSection {
+    width: 100%;
+    display: flex;
+    margin: 10px 0;
+}
+
+.loginButton {
+    margin: 20px 0;
+}
