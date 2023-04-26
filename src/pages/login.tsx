@@ -1,10 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import '../css/login.css'
+// import '../pages/css/login.css'
 import {Button, TextField} from "@mui/material";
 import {styled} from "@mui/system";
 import axios from "axios";
+import {useState} from "react";
+
 const style = {
     display: 'flex',
     flexDirection: 'column',
@@ -53,7 +55,8 @@ export const SignInSignUpModal = (params: any) => {
         showModal,
         setShowModal,
         loginData,
-        setLoginData
+        setLoginData,
+        setLoginResponse
     } = params
     const handleClose = () => setShowModal(false);
 
@@ -61,55 +64,10 @@ export const SignInSignUpModal = (params: any) => {
 
         await axios.post('/api/middlewareApi', loginData).then(async (res: any) => {
             console.log("response :::: ", res)
+            setLoginResponse(res.data.data)
         })
-        // axios.post('https://j96kazi23.testdrive.workfront.com/attask/api/v5.0/login', loginData,{
-        //     headers: {
-        //         "Cookie": "XSRF-TOKEN=a387992720e442bcb9197de2bf32809c; attask=fd70792c73204da2b39e160d710eabdd; sessionExpiration=1682917052606; wf-node=f01c8b62-5cb2-4a95-b7cc-3487f99e2f63",
-        //         "Cache-Control": "no-cache",
-        //         "Postman-Token": "<calculated when request is sent>",
-        //         "Content-Type": "application/x-www-form-urlencoded",
-        //         "Content-Length": "<calculated when request is sent>",
-        //         "Host": "<calculated when request is sent>",
-        //         "Accept": "*/*",
-        //         "Accept-Encoding": "gzip, deflate, br",
-        //         "Connection": "keep-alive",
-        //         "x-requested-with": "XMLHttpRequest",
-        //         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36",
-        //         "content-type": "application/x-www-form-urlencoded"
-        //     }}).then((res) => {
-        //     console.log("response from api ::: ", res)
         // })
         console.log("handleLoginIntoWorkFront :: ")
-        fetch('https://j96kazi23.testdrive.workfront.com/attask/api/v5.0/login', {
-            method: 'POST',
-            headers: {
-                "Cookie": "XSRF-TOKEN=a387992720e442bcb9197de2bf32809c; attask=fd70792c73204da2b39e160d710eabdd; sessionExpiration=1682917052606; wf-node=f01c8b62-5cb2-4a95-b7cc-3487f99e2f63",
-                "Cache-Control": "no-cache",
-                "Postman-Token": "<calculated when request is sent>",
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Content-Length": "<calculated when request is sent>",
-                "Host": "<calculated when request is sent>",
-                "Accept": "*/*",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-                "x-requested-with": "XMLHttpRequest",
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36",
-                "content-type": "application/x-www-form-urlencoded",
-                "Access-Control-Allow-Origin": {
-                    "type": "string",
-                    "description": "Which origin can invoke the /test API\n",
-                    "default": "http://localhost:3000/"
-                },
-                "Access-Control-Allow-Methods": {
-                    "type": "string",
-                    "description": "Which methods are allowed\n",
-                    "default": "GET, POST, PUT"
-                }
-            },
-            body: loginData // Here, stringContent or bufferContent would also work
-        }).then(function (res) {
-            return res.json();
-        })
     }
 
     return (
