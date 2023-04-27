@@ -9,12 +9,12 @@ app.use(cors());
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    console.log("response ::: ", req.body)
-    const options = req.body;
+    const data = req.body;
     const requestAsync = async () => {
         return new Promise((resolve, reject) => {
-            axios.post('https://j96kazi23.testdrive.workfront.com/attask/api/v5.0/login', options, {
+            axios.post(`https://j96kazi23.testdrive.workfront.com/attask/api/v5.0/resvt?userID=${data.userID}&startDate=${data.startDate}&endDate=${data.endDate}`, '', {
                 headers: {
+                    "sessionID":data.sessionID,
                     "Cookie": "XSRF-TOKEN=a387992720e442bcb9197de2bf32809c; attask=fd70792c73204da2b39e160d710eabdd; sessionExpiration=1682917052606; wf-node=f01c8b62-5cb2-4a95-b7cc-3487f99e2f63",
                     "Cache-Control": "no-cache",
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -26,9 +26,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     "content-type": "application/x-www-form-urlencoded"
                 }
             }).then((res) => {
-                console.log("response from api ::: ", res)
                 resolve(res.data)
-            })
+            }).catch((err) => reject(err))
         })
     }
     // await res
